@@ -25,7 +25,7 @@ console.log(updateData);
 console.log(entListData);
 
 // write the data back to the file
-fs.writeFileSync(rootDir + '/data/updates.json', JSON.stringify(updateData));
-fs.writeFileSync(rootDir + '/data/entList.json', JSON.stringify(entListData));
+fs.writeFileSync(rootDir + '/data/updates.json', JSON.stringify(updateData, null, 2));
+fs.writeFileSync(rootDir + '/data/entList.json', JSON.stringify(entListData, null, 2));
 
 console.log("Done");
