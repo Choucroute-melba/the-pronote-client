@@ -11,5 +11,6 @@ jobs:
           node-version: '14.x'
       - run: npm install -g typescript
       - run: npm install
+      - run: npm install --save-dev @types/node
       - run: tsc "./.github/workflows/jsonDataUpdater.ts"
       - run: node "./.github/workflows/jsonDataUpdater.js"
