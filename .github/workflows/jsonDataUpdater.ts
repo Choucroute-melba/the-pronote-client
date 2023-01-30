@@ -1,5 +1,8 @@
 const fs = require('fs');
 
+const rootDir = process.cwd();
+console.log(rootDir);
+
 type UpdateData = {
     last_updated: string,
     last_updated_ent_list: string,
@@ -12,9 +15,9 @@ type EntListData = {
     list: string[]
 }
 // open the file in read / write mode
-const updateData: UpdateData = require("../../data/updates.json");
+const updateData: UpdateData = require(rootDir + "/data/updates.json");
 console.log(updateData);
-const entListData: EntListData = require("../../data/entList.json");
+const entListData: EntListData = require(rootDir + "/data/entList.json");
 console.log(entListData);
 
 // update the data
@@ -22,7 +25,7 @@ updateData.last_updated = new Date().toISOString();
 entListData.last_updated = new Date().toISOString();
 
 // write the data back to the file
-fs.writeFileSync('../../data/updates.json', JSON.stringify(updateData));
-fs.writeFileSync('../../data/entList.json', JSON.stringify(entListData));
+fs.writeFileSync(rootDir + '/data/updates.json', JSON.stringify(updateData));
+fs.writeFileSync(rootDir + '/data/entList.json', JSON.stringify(entListData));
 
 console.log("Done");
