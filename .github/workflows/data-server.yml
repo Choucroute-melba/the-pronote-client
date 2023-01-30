@@ -14,3 +14,6 @@ jobs:
       - run: npm install --save-dev @types/node
       - run: tsc "./.github/workflows/jsonDataUpdater.ts"
       - run: node "./.github/workflows/jsonDataUpdater.js"
+      - run: git config --local user.name "JSON Data Updater"
+      - run: git add *
+      - run: git commit -m "Updated JSON data files"

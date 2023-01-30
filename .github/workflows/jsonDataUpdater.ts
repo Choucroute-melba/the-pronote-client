@@ -16,13 +16,13 @@ type EntListData = {
 }
 // open the file in read / write mode
 const updateData: UpdateData = require(rootDir + "/data/updates.json");
-console.log(updateData);
 const entListData: EntListData = require(rootDir + "/data/entList.json");
-console.log(entListData);
 
 // update the data
 updateData.last_updated = new Date().toISOString();
 entListData.last_updated = new Date().toISOString();
+console.log(updateData);
+console.log(entListData);
 
 // write the data back to the file
 fs.writeFileSync(rootDir + '/data/updates.json', JSON.stringify(updateData));
