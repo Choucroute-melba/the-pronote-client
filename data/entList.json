@@ -1,4 +1,6 @@
-[
+{
+  "last_updated": "2019-01-01",
+  "list": [
   {
     "name": "e-lyco",
     "region": "Pays de la Loire",
@@ -9,4 +11,5 @@
     "region": "Pays de la Maine",
     "url": "https://cas3.e-lyco-the-second.fr"
   }
-]
+  ]
+}
