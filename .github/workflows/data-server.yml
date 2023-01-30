@@ -15,7 +15,6 @@ jobs:
       - run: tsc "./.github/workflows/jsonDataUpdater.ts"
       - run: node "./.github/workflows/jsonDataUpdater.js"
       - run: git status
-      - uses: EndBug/add-and-commit@v7
-        with:
-          message: Updated JSON data files
+      - run: git add data/*.json
       - run: git commit -m "Updated JSON data files"
+      - run: git push
