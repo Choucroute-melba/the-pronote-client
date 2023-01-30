@@ -1,15 +1,1 @@
-{
-  "last_updated": "2019-01-01",
-  "list": [
-  {
-    "name": "e-lyco",
-    "region": "Pays de la Loire",
-    "url": "https://cas3.e-lyco.fr"
-  },
-  {
-    "name": "e-lyco the second",
-    "region": "Pays de la Maine",
-    "url": "https://cas3.e-lyco-the-second.fr"
-  }
-  ]
-}
+{"last_updated":"2023-01-30T23:25:03.478Z","list":[{"name":"e-lyco","region":"Pays de la Loire","url":"https://cas3.e-lyco.fr"},{"name":"e-lyco the second","region":"Pays de la Maine","url":"https://cas3.e-lyco-the-second.fr"}]}
