@@ -15,5 +15,6 @@ jobs:
       - run: tsc "./.github/workflows/jsonDataUpdater.ts"
       - run: node "./.github/workflows/jsonDataUpdater.js"
       - run: git config --local user.name "JSON Data Updater"
-      - run: git add *
+      - run: git add ./data/*.json
+      - run: git push
       - run: git commit -m "Updated JSON data files"
