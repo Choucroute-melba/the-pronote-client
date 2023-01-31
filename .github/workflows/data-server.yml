@@ -13,7 +13,7 @@ jobs:
         uses: InfraWay/get-changed-files@v2.0
         with:
           format: json
-      - run: echo "Changed files ":" ${{ steps.changed-files.outputs.all }}
+      - run: echo "Changed files ":"" ${{ steps.changed-files.outputs.all }}
       - run: |
           for file in ${{ steps.changed-files.outputs.all }}; do
             echo "Do something with ${file}"
