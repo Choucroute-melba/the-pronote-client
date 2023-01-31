@@ -10,7 +10,7 @@ jobs:
         with:
           node-version: '14.x'
       - id: changed-files
-        uses: jitterbit/get-changed-files@v2
+        uses: InfraWay/get-changed-files@v2.0
         with:
           format: json
       - run: echo "Changed files ":" ${{ steps.changed-files.outputs.changed }}"
