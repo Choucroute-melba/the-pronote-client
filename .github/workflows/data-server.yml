@@ -22,7 +22,7 @@ jobs:
       - run: npm install
       - run: npm install --save-dev @types/node
       - run: tsc "./.github/workflows/jsonDataUpdater.ts"
-      - run: node "./.github/workflows/jsonDataUpdater.js" ${{ steps.changed-files.outputs.all }}
+      - run: node "./.github/workflows/jsonDataUpdater.js" "${steps.changed-files.outputs.all}"
       - run: git config --global user.email "github-actions[bot]@users.noreply.github.com"
       - run: git config --global user.name "JSON Data updater (github-actions[bot])"
       - run: git status

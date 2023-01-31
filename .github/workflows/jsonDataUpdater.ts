@@ -5,8 +5,7 @@ const changedFilesRaw = process.argv[2].replace("[", "").replace("]", "");
 const changedFiles = changedFilesRaw.split(" ").map((file: string) => file.trim());
 console.log(changedFiles);
 
-const rootDir = "D:\\\\Vivien\\\\p\\\\Android\\\\ThePronoteClient";//process.cwd();
-console.log(rootDir);
+const rootDir = process.cwd(); //"D:\\\\Vivien\\\\p\\\\Android\\\\ThePronoteClient";//
 
 type UpdateData = {
     last_updated: string,
