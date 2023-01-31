@@ -12,7 +12,7 @@ jobs:
       - id: changed-files
         uses: InfraWay/get-changed-files@v2.0
         with:
-          format: json
+          format: space-delimited
       - run: echo "Changed files ":"" ${{ steps.changed-files.outputs.all }}
       - run: |
           for file in ${{ steps.changed-files.outputs.all }}; do
@@ -22,7 +22,7 @@ jobs:
       - run: npm install
       - run: npm install --save-dev @types/node
       - run: tsc "./.github/workflows/jsonDataUpdater.ts"
-      - run: node "./.github/workflows/jsonDataUpdater.js"
+      - run: node "./.github/workflows/jsonDataUpdater.js" ${{ steps.changed-files.outputs.all }}
       - run: git config --global user.email "github-actions[bot]@users.noreply.github.com"
       - run: git config --global user.name "JSON Data updater (github-actions[bot])"
       - run: git status
