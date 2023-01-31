@@ -9,6 +9,15 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '14.x'
+      - id: changed-files
+        uses: jitterbit/get-changed-files@v2
+        with:
+          format: json
+      - run: echo ${{ steps.changed-files.outputs.changed }}
+      - run: |
+          for file in ${{ steps.changed-files.outputs.changed }}
+            echo $file
+          done
       - run: npm install -g typescript
       - run: npm install
       - run: npm install --save-dev @types/node
