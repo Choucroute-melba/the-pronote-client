@@ -27,5 +27,5 @@ jobs:
       - run: git config --global user.name "JSON Data updater (github-actions[bot])"
       - run: git status
       - run: git add data/*.json
-      - run: git commit -m "Updated JSON data files"
+      - run: git diff-index --quiet HEAD || git commit -m "Updated JSON data files"
       - run: git push
