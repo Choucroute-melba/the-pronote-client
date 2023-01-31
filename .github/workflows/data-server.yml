@@ -13,10 +13,10 @@ jobs:
         uses: jitterbit/get-changed-files@v2
         with:
           format: json
-      - run: echo ${{ steps.changed-files.outputs.changed }}
+      - run: echo "Changed files ":" ${{ steps.changed-files.outputs.changed }}"
       - run: |
-          for file in ${{ steps.changed-files.outputs.changed }}
-            echo $file
+          for file in ${{ steps.changed-files.outputs.changed }}; do
+            echo "Do something with ${file}"
           done
       - run: npm install -g typescript
       - run: npm install
