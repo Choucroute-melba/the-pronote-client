@@ -10,6 +10,11 @@
       "name": "e-lyco the second",
       "region": "Pays de la Maine",
       "url": "https://cas3.e-lyco-the-second.fr"
+    },
+    {
+      "name": "another one",
+      "region": "Nord-Pas-de-Calais",
+      "url": "https://ent.nordpasdecalais.fr/pronote"
     }
   ]
 }
