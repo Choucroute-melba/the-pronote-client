@@ -2,6 +2,8 @@ package moi.choucroutemelba.thepronoteclient.data
 
 import android.content.Context
 import kotlinx.coroutines.Dispatchers
+import moi.choucroutemelba.thepronoteclient.data.features.FeaturesDataApi
+import moi.choucroutemelba.thepronoteclient.data.features.FeaturesDataApiImpl
 import moi.choucroutemelba.thepronoteclient.data.features.FeaturesDataRemoteDataSource
 import moi.choucroutemelba.thepronoteclient.data.features.FeaturesDataRepository
 import moi.choucroutemelba.thepronoteclient.data.pronote.api.PronoteApi
@@ -15,6 +17,7 @@ interface AppContainer {
 
 class AppContainerImpl(private val applicationContext: Context) : AppContainer {
     private val pronoteApi = PronoteApi
+    private val featuresDataApi: FeaturesDataApi = FeaturesDataApiImpl
 
     private val userRemoteDataSource: UserRemoteDataSource by lazy {
         UserRemoteDataSource(pronoteApi, Dispatchers.IO)
@@ -25,7 +28,7 @@ class AppContainerImpl(private val applicationContext: Context) : AppContainer {
     }
 
     private val featuresDataRemoteDataSource: FeaturesDataRemoteDataSource by lazy {
-        FeaturesDataRemoteDataSource()
+        FeaturesDataRemoteDataSource(featuresDataApi, Dispatchers.IO)
     }
 
     override val featuresDataRepository: FeaturesDataRepository by lazy {

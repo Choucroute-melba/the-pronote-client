@@ -1,7 +1,6 @@
 package moi.choucroutemelba.thepronoteclient.data.pronote.api
 
 import android.util.Log
-import com.google.gson.*
 import java.io.InputStream
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
@@ -28,7 +27,7 @@ fun readStream(input: InputStream): String {
 
 object PronoteApi {
     private const val BASE_URL = "https://android.com/"
-    suspend fun getTest(urlV: String): PronoteData {
+    fun getTest(urlV: String): PronoteData {
         var input: String? = null
         var headers: MutableMap<String?, MutableList<String?>?>? = null
         var error: String? = null

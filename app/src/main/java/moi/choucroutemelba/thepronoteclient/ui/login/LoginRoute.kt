@@ -2,9 +2,11 @@ package moi.choucroutemelba.thepronoteclient.ui.login
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.util.Log
 import android.webkit.WebView
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
@@ -19,8 +21,14 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import com.google.gson.Gson
+import moi.choucroutemelba.thepronoteclient.data.features.ApiErrorType
+import moi.choucroutemelba.thepronoteclient.data.features.HttpException
 import moi.choucroutemelba.thepronoteclient.data.pronote.PronoteWebViewClient
+import moi.choucroutemelba.thepronoteclient.ui.components.ChoiceBar
+import moi.choucroutemelba.thepronoteclient.ui.components.HttpErrorRender
 
 @Composable
 fun LoginRoute(
@@ -29,12 +37,15 @@ fun LoginRoute(
 
     LoginScreen(
         uiState = loginViewModel.uiState,
-        onNavToHome = loginViewModel::navigateToHome,
-        onNavBack = loginViewModel::navigateBack,
         setUseEnt = loginViewModel::setUseEnt,
         setEntName = loginViewModel::setEntName,
         setUsername = loginViewModel::setUsername,
-        setPassword = loginViewModel::setPassword
+        setPassword = loginViewModel::setPassword,
+        setPostalCode = loginViewModel::setPostalCode,
+        setSelectionMethod = loginViewModel::setSelectionMethod,
+        getEstablishmentList = loginViewModel::getEstablishmentList,
+        onNavToHome = loginViewModel::navigateToHome,
+        onNavBack = loginViewModel::navigateBack,
     )
 }
 
@@ -45,42 +56,53 @@ fun LoginScreen(
     setEntName: (String) -> Unit,
     setUsername: (String) -> Unit,
     setPassword: (String) -> Unit,
+    setPostalCode: (String) -> Unit,
+    setSelectionMethod: (SelectionMethod) -> Unit,
+    getEstablishmentList: () -> Unit,
     onNavToHome: () -> Unit,
     onNavBack: () -> Unit
 ) {
     val isEntMenuOpen = remember { mutableStateOf(false) }
-
     Column(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize().scrollable(rememberScrollState(), orientation = Orientation.Vertical)
     ) {
         Text("Add a Pronote Account")
-        Row {
-            Checkbox(
-                checked = uiState.useEnt,
-                onCheckedChange = {
-                    setUseEnt(!uiState.useEnt)
-                    isEntMenuOpen.value = !isEntMenuOpen.value
-                }
-            )
-            Text("Use ENT")
+        ChoiceBar(
+            choices = mapOf(
+                SelectionMethod.GEOLOCATION to "Geolocation",
+                SelectionMethod.URL to "URL",
+            ),
+            selectedChoice = uiState.selectionMethod,
+            onChoiceSelected = {
+                setSelectionMethod(it as SelectionMethod)
+            },
+            modifier = Modifier.padding(8.dp).fillMaxWidth()
+        )
+        if(uiState.error != null) {
+            var text = "Error (${uiState.error!!.type})"
+            if(uiState.error!!.type == ApiErrorType.HTTP_ERROR && uiState.error!!.e != null) {
+                val e: HttpException = uiState.error!!.e as HttpException
+                HttpErrorRender(e, {})
+            }
+            text += "\n${uiState.error!!.message}"
+            Text(text, color = MaterialTheme.colors.error)
         }
-        if(uiState.useEnt) {
-            Text("ENT Name: ${uiState.entName}")
-            moi.choucroutemelba.thepronoteclient.ui.components.DropdownMenu(
-                title = "Choose ENT...",
-                items = buildMap { uiState.availableEnt.forEach { put(it.key) {
-                    Text(
-                        it.value,
-                        color = MaterialTheme.colors.onSurface
-                    ) }
-                } },
-                isExpanded = isEntMenuOpen.value,
-                onExpand = { isEntMenuOpen.value = it },
-                callback = {
-                    setEntName(it as String)
-                    Log.i("LoginScreen", "Selected ENT: ${uiState.availableEnt[it as String]}")
-                },
+        if(uiState.selectionMethod == SelectionMethod.GEOLOCATION) {
+            GeolocationSelection(
+                uiState = uiState,
+                setPostalCode = setPostalCode,
+                onNavToHome = onNavToHome,
+                getEstablishments = getEstablishmentList
             )
+            Text(Gson().toJson(uiState.establishments))
+        }
+        else if(uiState.selectionMethod == SelectionMethod.URL) {
+            UrlSelection(
+                uiState = uiState,
+                setUrl = setPostalCode,
+                onNavToHome = onNavToHome,
+            )
+            Text(Gson().toJson(uiState.availableEnt))
         }
         TextField(
             value = uiState.username,
@@ -110,6 +132,64 @@ fun LoginScreen(
         )
         Button(onClick = { onNavBack() }) {
             Text("Login to ${uiState.username}")
+        }
+    }
+}
+
+@Composable
+fun GeolocationSelection(
+    uiState: LoginUiState,
+    setPostalCode: (String) -> Unit,
+    getEstablishments: () -> Unit,
+    onNavToHome: () -> Unit,
+) {
+    Column {
+        Text("Find your establishment")
+        if(uiState.loadingEstablishments)
+            LinearProgressIndicator()
+        TextField(
+            value = uiState.postalCode ?: "",
+            onValueChange = { setPostalCode(it) },
+            label = { Text("Postal Code") },
+            singleLine = true,
+            keyboardOptions = KeyboardOptions.Default.copy(
+                capitalization = KeyboardCapitalization.None,
+                keyboardType = KeyboardType.Number,
+                autoCorrect = false,
+                imeAction = ImeAction.Go
+            ),
+            keyboardActions = KeyboardActions(onGo = { getEstablishments() })
+        )
+        Button(onClick = { getEstablishments() }) {
+            Text("Search for ${uiState.postalCode}")
+        }
+    }
+}
+
+@Composable
+fun UrlSelection(
+    uiState: LoginUiState,
+    setUrl: (String) -> Unit,
+    onNavToHome: () -> Unit,
+) {
+    Column {
+        Text("Add a Pronote Account using the URL provided by your school")
+        if (uiState.loadingEntList)
+            LinearProgressIndicator()
+        TextField(
+            value = uiState.url ?: "",
+            onValueChange = { setUrl(it) },
+            label = { Text("URL") },
+            singleLine = true,
+            keyboardOptions = KeyboardOptions.Default.copy(
+                capitalization = KeyboardCapitalization.None,
+                keyboardType = KeyboardType.Text,
+                autoCorrect = false,
+                imeAction = ImeAction.Next
+            )
+        )
+        Button(onClick = { onNavToHome() }) {
+            Text("Connect to ${uiState.url?.subSequence(8, 27)}")
         }
     }
 }
@@ -158,6 +238,9 @@ fun LoginScreenPreview(@PreviewParameter(LoginUiStatePreviewProvider::class) uiS
         setEntName = {},
         setUsername = {},
         setPassword = {},
-        onNavToHome = {}
+        setPostalCode = {},
+        setSelectionMethod = {},
+        getEstablishmentList = {},
+        onNavToHome = {},
     ) {}
 }
