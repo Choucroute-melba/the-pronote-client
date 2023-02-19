@@ -3,18 +3,85 @@
   "list": [
     {
       "name": "e-lyco",
+      "id": "e_lyco",
       "region": "Pays de la Loire",
       "url": "https://cas3.e-lyco.fr"
     },
     {
-      "name": "e-lyco the second",
-      "region": "Pays de la Maine",
-      "url": "https://cas3.e-lyco-the-second.fr"
+      "id": "ac_clermont_ferrand",
+      "type": "cas_edu",
+      "url": "https://cas.ent.auvergnerhonealpes.fr/login?selection=CLERMONT-ATS_parent_eleve"
     },
     {
-      "name": "another one",
-      "region": "Nord-Pas-de-Calais",
-      "url": "https://ent.nordpasdecalais.fr/pronote"
+      "id": "ac_grenoble",
+      "type": "cas",
+      "url": "https://cas.ent.auvergnerhonealpes.fr/login?selection=GRE-ATS_parent_eleve"
+    },
+    {
+      "id": "ac_lyon",
+      "type": "cas",
+      "url": "https://cas.ent.auvergnerhonealpes.fr/login?selection=LYON-ATS_parent_eleve"
+    },
+    {
+      "id": "cas_arsene76",
+      "type": "cas",
+      "url": "https://cas.arsene76.fr/login?selection=ATS_parent_eleve"
+    },
+    {
+      "id": "cas_cybercolleges42",
+      "type": "cas",
+      "url": "https://cas.cybercolleges42.fr/login?selection=ATS_parent_eleve"
+    },
+    {
+      "id": "cas_ent27",
+      "type": "cas",
+      "url": "https://cas.ent27.fr/login?selection=ATS_parent_eleve"
+    },
+    {
+      "id": "cas_kosmos",
+      "type": "cas",
+      "url": "https://cas.kosmoseducation.com/login"
+    },
+    {
+      "id": "ecollege_haute_garonne",
+      "type": "cas",
+      "url": "https://cas.ecollege.haute-garonne.fr/login?selection=ATS_parent_eleve"
+    },
+    {
+      "id": "ent_creuse",
+      "type": "cas",
+      "url": "https://cas.entcreuse.fr/login"
+    },
+    {
+      "id": "occitanie_toulouse",
+      "type": "cas",
+      "url": "https://cas.mon-ent-occitanie.fr/login?selection=TOULO-ENT_parent_eleve"
+    },
+    {
+      "id": "occitanie_montpellier",
+      "type": "cas",
+      "url": "https://cas.mon-ent-occitanie.fr/login?selection=CSES-ENT_parent_eleve"
+    },
+    {
+      "id": "val_doise",
+      "type": "cas",
+      "url": "https://cas.moncollege.valdoise.fr/login?selection=eleveparent"
+    },
+    {
+      "id": "cas_cybercolleges42_edu",
+      "type": "cas_edu",
+      "url": "https://cas.cybercolleges42.fr/login?selection=EDU_parent_eleve"
+    },
+    {
+      "id": "ecollege_haute_garonne_edu",
+      "type": "cas_edu",
+      "url": "https://cas.ecollege.haute-garonne.fr/login?selection=EDU_parent_eleve"
+    },
+    {
+      "id": "ac_orleans_tours",
+      "type": "cas_edu",
+      "url": "https://ent.netocentre.fr/cas/login?&idpId=parentEleveEN-IdP",
+      "redirect_form": false
     }
   ]
 }
