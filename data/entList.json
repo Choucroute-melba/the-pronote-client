@@ -1,5 +1,5 @@
 {
-  "last_updated": "2023-02-19T18:56:03.493Z",
+  "last_updated": "2023-02-21T19:45:38.322Z",
   "list": [
     {
       "name": "e-lyco",
@@ -90,7 +90,7 @@
       "id": "ecollege_haute_garonne_edu",
       "type": "cas_edu",
       "url": "https://cas.ecollege.haute-garonne.fr/login?selection=EDU_parent_eleve",
-        "domain": "cas.ecollege.haute-garonne.fr"
+      "domain": "cas.ecollege.haute-garonne.fr"
     },
     {
       "id": "ac_orleans_tours",
